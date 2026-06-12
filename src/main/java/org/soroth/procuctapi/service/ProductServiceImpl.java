@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductResponse> findAllProducts(String keyword, Pageable pageable) {
-        return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageable)
+        return productRepository.findProductsByNameContainingIgnoreCase(keyword, keyword, pageable)
                 .map(productMapper::mabToResponse);
     }
 
