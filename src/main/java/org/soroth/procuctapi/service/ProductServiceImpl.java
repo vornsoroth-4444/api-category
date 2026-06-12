@@ -1,69 +1,89 @@
 package org.soroth.procuctapi.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.soroth.procuctapi.dto.ProductRequest;
 import org.soroth.procuctapi.dto.ProductResponse;
 import org.soroth.procuctapi.dto.UpdateProductRequest;
-import org.soroth.procuctapi.entity.Product;
+import org.soroth.procuctapi.mapper.ProductMapper;
 import org.soroth.procuctapi.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     //inject the repository here
-    private final ProductRepository productRepository;
-    private  Integer nextId = 1005;
-    // mapToEntity -> convert Request to Entity
-    private  Product mapToEntity(ProductRequest productRequest){
-        Product product = new Product();
-        product.setName(productRequest.name());
-        product.setDescription(productRequest.description());
-        product.setPrice(productRequest.price());
-        return product;
-    }
-    //mapToResponse -> convert Entity to Response
-    private ProductResponse mapToResponse (Product product){
-        return new ProductResponse(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice()
-        );
-    }
+//    private final ProductRepositoryOld productRepository;
+ private  final ProductRepository productRepository;
+ private final ProductMapper productMapper;
+
+
+//    // mapToEntity -> convert Request to Entity
+//    private  Product mapToEntity(ProductRequest productRequest){
+//        Product product = new Product();
+//        product.setName(productRequest.name());
+//        product.setDescription(productRequest.description());
+//        product.setPrice(productRequest.price());
+//        return product;
+//    }
+//    //mapToResponse -> convert Entity to Response
+//    private ProductResponse mapToResponse (Product product){
+//        return new ProductResponse(
+//                product.getId(),
+//                product.getName(),
+//                product.getDescription(),
+//                product.getPrice()
+//        );
+//    }
+
+
     @Override
     public ProductResponse createProduct( ProductRequest productRequest) {
 //        create entity product from the request
-        var product = mapToEntity(productRequest);
+        var product = productMapper.mapToProduct(productRequest);
 //        set ID using nextId
-        product.setId(nextId++);
-        return mapToResponse(productRepository.createProduct(product));
+        product.setUserId(1);
+//        insert the data to the table only need to
+//        repository.save(entity) = insert
+        return productMapper.mabToResponse(productRepository.save(product));
 
     }
-
     @Override
     public List<ProductResponse> findAllProducts() {
-        return productRepository.getProductList()
+//        repository.finAll()
+        return productRepository.findAll()
                 .stream()
-                .map(this::mapToResponse)
+                .map(productMapper::mabToResponse)
                 .toList();
+    }
+    @Override
+    public Page<ProductResponse> findAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable).map(productMapper::mabToResponse);
     }
 
     @Override
-    public ProductResponse findProductById(int id) {
-        var product = productRepository.findProductById(id);
-        return mapToResponse(product);
+    public Page<ProductResponse> findAllProducts(String keyword, Pageable pageable) {
+        return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageable)
+                .map(productMapper::mabToResponse);
     }
 
+    @Override
+    public ProductResponse findProductById(Integer id) {
+        var product = productRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Product with ID = " + id + " not found"));
+        return  productMapper.mabToResponse(product);
+    }
     @Override
     public ProductResponse updateProduct(Integer id, UpdateProductRequest updateProductRequest) {
   // find existing product
-        var existingProduct = productRepository.findProductById(id);
+        var existingProduct = productRepository.findById(id).orElseThrow(() -> new  NoSuchElementException("Product with ID = "+id+" not found"));
         // update the product with new values
         if (updateProductRequest.name() != null){
              existingProduct.setName(updateProductRequest.name());
@@ -75,13 +95,15 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setPrice(updateProductRequest.price());
         }
         // save the updated product
-        var updatedProduct = productRepository.updateProduct(id, existingProduct);
-        return mapToResponse(updatedProduct);
+      productRepository.save(existingProduct);
+        return productMapper.mabToResponse(existingProduct);
     }
-
     @Override
     public boolean deleteProduct(Integer id) {
-        return productRepository.deleteProductById(id);
+       if (productRepository.existsById(id)){
+           productRepository.deleteById(id);
+           return  true;
+       }
+       return false;
     }
-
 }

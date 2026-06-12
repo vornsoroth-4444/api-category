@@ -4,7 +4,10 @@ import org.soroth.procuctapi.dto.ProductRequest;
 import org.soroth.procuctapi.dto.ProductResponse;
 import org.soroth.procuctapi.dto.UpdateProductRequest;
 import org.soroth.procuctapi.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 //    For the loosely coupling design
@@ -12,7 +15,13 @@ import java.util.List;
 public interface ProductService {
     ProductResponse createProduct(ProductRequest productRequest) ;
     List<ProductResponse> findAllProducts();
-    ProductResponse findProductById (int id);
+
+    // for the pagination support when get all products
+    Page<ProductResponse> findAllProducts(Pageable pageable);
+    Page<ProductResponse> findAllProducts(String keyword, Pageable pageable);
+
+    ProductResponse findProductById (Integer id);
     ProductResponse updateProduct (Integer id, UpdateProductRequest updateProductRequest);
     boolean deleteProduct (Integer  id);
+
 }

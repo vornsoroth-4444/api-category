@@ -1,4 +1,4 @@
-package org.soroth.procuctapi.dto.category;
+package org.soroth.procuctapi.dto;
 
 public record UpdateCategoryRequest(
         String name,

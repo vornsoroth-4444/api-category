@@ -1,17 +1,17 @@
-package org.soroth.procuctapi.repository.category;
+package org.soroth.procuctapi.repository;
 
-import org.soroth.procuctapi.entity.category.Category;
+import org.soroth.procuctapi.entity.Category;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CategoryRepository {
+public class CategoryRepositoryOld {
     private  final List<Category> categories = new ArrayList<>(){{
-        add(new Category(1001, "Beverages", "A beverage is any potable liquid prepared for human consumption  ", 13.4f, 1));
-        add(new Category(1002, "Snacks", "Snacks are small portions of food eaten between meals ", 10.2f, 2));
-        add( new Category(1003, "Dairy", "Dairy products are foods derived from milk ", 20.5f, 3));
+//        add(new Category(1001, "Beverages", "A beverage is any potable liquid prepared for human consumption  ", 13.4f, 1));
+//        add(new Category(1002, "Snacks", "Snacks are small portions of food eaten between meals ", 10.2f, 2));
+//        add( new Category(1003, "Dairy", "Dairy products are foods derived from milk ", 20.5f, 3));
     }};
     public List<Category> getCategoryList(){
         return categories;

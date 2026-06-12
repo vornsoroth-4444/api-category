@@ -7,6 +7,8 @@ import org.soroth.procuctapi.dto.ProductRequest;
 import org.soroth.procuctapi.dto.ProductResponse;
 import org.soroth.procuctapi.dto.UpdateProductRequest;
 import org.soroth.procuctapi.service.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +19,15 @@ import java.util.List;
 public class ProductRestController {
     private final ProductService productService;
 
+//    @GetMapping
+//    public List<ProductResponse> getAllProducts(){
+//        return productService.findAllProducts();
+//    }
     @GetMapping
-    public List<ProductResponse> getAllProducts(){
-        return productService.findAllProducts();
+    public Page<ProductResponse> getAllProducts (
+            @RequestParam(required = false, defaultValue = "") String keyword,
+            Pageable pageable){
+        return productService.findAllProducts(keyword, pageable);
     }
 
     @PostMapping
@@ -29,7 +37,7 @@ public class ProductRestController {
 //    find product by id
 //    http://localhost:8080/api/v1/products
     @GetMapping("/{id}")
-    public ProductResponse getProductById(@PathVariable int id){
+    public ProductResponse getProductById(@PathVariable Integer id){
         return productService.findProductById(id);
     }
     // PATCH localhost:8080/api/v1/products
