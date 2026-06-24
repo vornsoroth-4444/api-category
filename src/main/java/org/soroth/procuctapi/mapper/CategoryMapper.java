@@ -1,8 +1,8 @@
 package org.soroth.procuctapi.mapper;
 
 import org.mapstruct.Mapper;
-import org.soroth.procuctapi.dto.CategoryRequest;
-import org.soroth.procuctapi.dto.CategoryResponse;
+import org.soroth.procuctapi.dto.request.CategoryRequest;
+import org.soroth.procuctapi.dto.response.CategoryResponse;
 import org.soroth.procuctapi.entity.Category;
 
 @Mapper(componentModel = "spring")

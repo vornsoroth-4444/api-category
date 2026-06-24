@@ -1,8 +1,8 @@
 package org.soroth.procuctapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.soroth.procuctapi.dto.TagRequest;
-import org.soroth.procuctapi.dto.TagResponse;
+import org.soroth.procuctapi.dto.request.TagRequest;
+import org.soroth.procuctapi.dto.response.TagResponse;
 import org.soroth.procuctapi.mapper.TagMapper;
 import org.soroth.procuctapi.repository.TagRepository;
 import org.soroth.procuctapi.service.TagService;

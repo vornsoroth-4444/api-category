@@ -3,15 +3,13 @@ package org.soroth.procuctapi.restcontrollers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.soroth.procuctapi.dto.ProductRequest;
-import org.soroth.procuctapi.dto.ProductResponse;
-import org.soroth.procuctapi.dto.UpdateProductRequest;
+import org.soroth.procuctapi.dto.request.ProductRequest;
+import org.soroth.procuctapi.dto.response.ProductResponse;
+import org.soroth.procuctapi.dto.request.UpdateProductRequest;
 import org.soroth.procuctapi.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

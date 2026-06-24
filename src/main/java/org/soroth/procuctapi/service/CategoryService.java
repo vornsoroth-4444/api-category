@@ -1,8 +1,8 @@
 package org.soroth.procuctapi.service;
 
-import org.soroth.procuctapi.dto.CategoryRequest;
-import org.soroth.procuctapi.dto.CategoryResponse;
-import org.soroth.procuctapi.dto.UpdateCategoryRequest;
+import org.soroth.procuctapi.dto.request.CategoryRequest;
+import org.soroth.procuctapi.dto.response.CategoryResponse;
+import org.soroth.procuctapi.dto.request.UpdateCategoryRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

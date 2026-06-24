@@ -2,13 +2,12 @@ package org.soroth.procuctapi.restcontrollers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.soroth.procuctapi.dto.CategoryRequest;
-import org.soroth.procuctapi.dto.CategoryResponse;
-import org.soroth.procuctapi.dto.UpdateCategoryRequest;
+import org.soroth.procuctapi.dto.request.CategoryRequest;
+import org.soroth.procuctapi.dto.response.CategoryResponse;
+import org.soroth.procuctapi.dto.request.UpdateCategoryRequest;
 import org.soroth.procuctapi.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package org.soroth.procuctapi.dto;
+package org.soroth.procuctapi.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

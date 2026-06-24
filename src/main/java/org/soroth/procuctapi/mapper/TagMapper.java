@@ -1,8 +1,8 @@
 package org.soroth.procuctapi.mapper;
 
 import org.mapstruct.Mapper;
-import org.soroth.procuctapi.dto.TagRequest;
-import org.soroth.procuctapi.dto.TagResponse;
+import org.soroth.procuctapi.dto.request.TagRequest;
+import org.soroth.procuctapi.dto.response.TagResponse;
 import org.soroth.procuctapi.entity.Tag;
 
 @Mapper(componentModel = "spring")

@@ -1,4 +1,4 @@
-package org.soroth.procuctapi.dto;
+package org.soroth.procuctapi.dto.response;
 
 import lombok.Builder;
 

@@ -1,12 +1,10 @@
 package org.soroth.procuctapi.service;
 
-import org.soroth.procuctapi.dto.ProductRequest;
-import org.soroth.procuctapi.dto.ProductResponse;
-import org.soroth.procuctapi.dto.UpdateProductRequest;
-import org.soroth.procuctapi.entity.Product;
+import org.soroth.procuctapi.dto.request.ProductRequest;
+import org.soroth.procuctapi.dto.response.ProductResponse;
+import org.soroth.procuctapi.dto.request.UpdateProductRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 
 import java.util.List;

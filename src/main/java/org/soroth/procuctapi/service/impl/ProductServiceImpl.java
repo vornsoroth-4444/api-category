@@ -2,9 +2,9 @@ package org.soroth.procuctapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.soroth.procuctapi.dto.ProductRequest;
-import org.soroth.procuctapi.dto.ProductResponse;
-import org.soroth.procuctapi.dto.UpdateProductRequest;
+import org.soroth.procuctapi.dto.request.ProductRequest;
+import org.soroth.procuctapi.dto.response.ProductResponse;
+import org.soroth.procuctapi.dto.request.UpdateProductRequest;
 import org.soroth.procuctapi.entity.Tag;
 import org.soroth.procuctapi.mapper.ProductMapper;
 import org.soroth.procuctapi.repository.CategoryRepository;

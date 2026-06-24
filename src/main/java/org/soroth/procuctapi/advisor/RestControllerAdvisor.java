@@ -1,6 +1,6 @@
 package org.soroth.procuctapi.advisor;
 
-import org.soroth.procuctapi.dto.ErrorResponse;
+import org.soroth.procuctapi.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

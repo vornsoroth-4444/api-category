@@ -1,7 +1,7 @@
 package org.soroth.procuctapi.service;
 
-import org.soroth.procuctapi.dto.TagRequest;
-import org.soroth.procuctapi.dto.TagResponse;
+import org.soroth.procuctapi.dto.request.TagRequest;
+import org.soroth.procuctapi.dto.response.TagResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
