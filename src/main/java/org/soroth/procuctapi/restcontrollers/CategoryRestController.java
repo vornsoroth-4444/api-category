@@ -8,6 +8,7 @@ import org.soroth.procuctapi.dto.UpdateCategoryRequest;
 import org.soroth.procuctapi.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,14 @@ public class CategoryRestController {
     @GetMapping("/search")
     public List<CategoryResponse> getCategoryByName(@RequestParam String name){
         return categoryService.findByName(name);
+    }
+//    @GetMapping("/parents")
+//    List<CategoryResponse> getParentCategories(@RequestParam("sort") String sortDirection) {
+//        return categoryService.findParentCategories(sortDirection);
+//    }
+    @GetMapping("/parents")
+    List<CategoryResponse> getParentCategories(@RequestParam("sort") String sortDirection){
+        return  categoryService.findParentCategories(sortDirection);
     }
 
     @PostMapping

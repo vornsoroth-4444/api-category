@@ -1,12 +1,16 @@
-package org.soroth.procuctapi.service;
+package org.soroth.procuctapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.soroth.procuctapi.dto.ProductRequest;
 import org.soroth.procuctapi.dto.ProductResponse;
 import org.soroth.procuctapi.dto.UpdateProductRequest;
+import org.soroth.procuctapi.entity.Tag;
 import org.soroth.procuctapi.mapper.ProductMapper;
+import org.soroth.procuctapi.repository.CategoryRepository;
 import org.soroth.procuctapi.repository.ProductRepository;
+import org.soroth.procuctapi.repository.TagRepository;
+import org.soroth.procuctapi.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,6 +28,8 @@ public class ProductServiceImpl implements ProductService {
     //inject the repository here
 //    private final ProductRepositoryOld productRepository;
  private  final ProductRepository productRepository;
+ private final CategoryRepository categoryRepository;
+ private final TagRepository tagRepository;
  private final ProductMapper productMapper;
 
 
@@ -43,11 +51,23 @@ public class ProductServiceImpl implements ProductService {
 //        );
 //    }
 
-
     @Override
     public ProductResponse createProduct( ProductRequest productRequest) {
 //        create entity product from the request
         var product = productMapper.mapToProduct(productRequest);
+//        check if the category exist
+      var category = categoryRepository.findById(productRequest.categoryId()).orElseThrow(
+              ()-> new NoSuchElementException("Category with id = " + productRequest.categoryId() + "not found")
+      );
+      product.setCategory(category);
+      //convert Set<Long> to Set<Tag>
+      // getReferenceById vs findById
+      if (productRequest.tagIds() != null && !productRequest.tagIds().isEmpty()){
+          Set<Tag> tags = productRequest.tagIds().stream()
+                  .map(tagId -> tagRepository.getReferenceById(tagId))
+                  .collect(Collectors.toSet());
+          product.setTags(tags);
+      }
 //        set ID using nextId
         product.setUserId(1);
 //        insert the data to the table only need to

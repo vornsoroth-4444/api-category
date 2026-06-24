@@ -18,7 +18,8 @@ public record CategoryRequest(
         @Size(min = 1, max = 100)
         String name,
         @Size(min = 1, max = 255)
-        String description
-
+        String description,
+        String icon,
+        Integer parentCategoryId
 ) {
 }

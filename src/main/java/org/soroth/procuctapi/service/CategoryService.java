@@ -20,4 +20,8 @@ public interface CategoryService {
    List<CategoryResponse> findByName(String name);
     CategoryResponse updateCategory(Integer id, UpdateCategoryRequest updateCategoryRequest);
     void deleteCategory(Integer id);
+
+
+    // asc, desc
+    List<CategoryResponse> findParentCategories(String sortDirection);
 }
