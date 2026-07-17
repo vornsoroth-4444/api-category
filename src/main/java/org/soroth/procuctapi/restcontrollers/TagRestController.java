@@ -16,12 +16,12 @@ public class TagRestController {
     private final TagService tagService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping()
+    @PostMapping
     public TagResponse create(@RequestBody TagRequest tagRequest){
         return tagService.createTag(tagRequest);
     }
-    @GetMapping()
+    @GetMapping
     public Page<TagResponse> getAll(Pageable pageable){
-        return  tagService.getAllTags(pageable);
+        return tagService.getAllTags(pageable);
     }
 }

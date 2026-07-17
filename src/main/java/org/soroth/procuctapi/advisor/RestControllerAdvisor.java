@@ -29,7 +29,6 @@ public class RestControllerAdvisor {
     }
 
 
-
 //    handle not found
 //    ExceptionHandler (NoSuchElementException.class)
     @ExceptionHandler(NoSuchElementException.class)

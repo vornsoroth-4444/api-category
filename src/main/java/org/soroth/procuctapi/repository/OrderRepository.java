@@ -1,9 +1,11 @@
 package org.soroth.procuctapi.repository;
 
-import org.soroth.procuctapi.entity.Tag;
+import org.soroth.procuctapi.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
-public interface TagRepository extends JpaRepository<Tag ,Long> {
+public interface OrderRepository extends JpaRepository<Order , UUID> {
 }

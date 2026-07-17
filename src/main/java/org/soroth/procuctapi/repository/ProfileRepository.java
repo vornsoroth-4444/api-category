@@ -1,9 +1,9 @@
 package org.soroth.procuctapi.repository;
 
-import org.soroth.procuctapi.entity.Tag;
+import org.soroth.procuctapi.entity.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TagRepository extends JpaRepository<Tag ,Long> {
+public interface ProfileRepository extends JpaRepository<Profile,Long> {
 }

@@ -1,13 +1,37 @@
 #spring.application.name=restful_api_product_spring_boot
+#configure client cred for keycloak (for creating user)
+
+keycloak:
+  server-url: http://localhost:9999
+  realm: spring-app-realm
+  client-id: spring-boot-app
+  client-secret: 1HP4PfInYD7nnQ3Qwl3bcnGrCTt7KMoY
+
+server:
+  port: 8080
+file:
+  client-path: /files
+  storage-location: D:/ISTAD/Spring/ite-images/
+  base-url: http://localhost:${server.port}${file.client-path}/
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB # max allocation for single file size
+      max-request-size: 30MB # ... for the whole request
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9999/realms/spring-app-realm
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update         # create | update | none
+      ddl-auto: update    # create | update | none
     show-sql: true              # log generated SQL
     properties:
       hibernate:

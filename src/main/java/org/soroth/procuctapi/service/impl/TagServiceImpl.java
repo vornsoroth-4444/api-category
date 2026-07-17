@@ -18,8 +18,8 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagResponse createTag(TagRequest request) {
-       var tag =  tagMapper.toEntity(request);
-        return tagMapper.toResponse(tagRepository.save(tag));
+        var tag = tagMapper.toEntity(request);
+        return  tagMapper.toResponse(tagRepository.save(tag));
     }
 
     @Override

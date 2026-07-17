@@ -6,9 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.soroth.procuctapi.dto.request.ProductRequest;
 import org.soroth.procuctapi.dto.response.ProductResponse;
 import org.soroth.procuctapi.dto.request.UpdateProductRequest;
+import org.soroth.procuctapi.entity.ProductFilter;
 import org.soroth.procuctapi.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,14 +23,23 @@ public class ProductRestController {
 //    public List<ProductResponse> getAllProducts(){
 //        return productService.findAllProducts();
 //    }
+//    @GetMapping
+//    public Page<ProductResponse> getAllProducts (
+//            @RequestParam(required = false, defaultValue = "") String keyword,
+//            Pageable pageable){
+//        return productService.findAllProducts(keyword, pageable);
+//    }
     @GetMapping
-    public Page<ProductResponse> getAllProducts (
-            @RequestParam(required = false, defaultValue = "") String keyword,
-            Pageable pageable){
-        return productService.findAllProducts(keyword, pageable);
+    @PreAuthorize("hasAuthority('product:view')")
+    public Page<ProductResponse> getAllProducts(
+            Pageable pageable,
+            ProductFilter filter
+    ){
+        return productService.findAllProducts(pageable, filter);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('product:create')")
     public ProductResponse createProduct(@Valid @RequestBody ProductRequest productRequest){
         return productService.createProduct(productRequest);
     }

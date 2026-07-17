@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.soroth.procuctapi.dto.request.ProductRequest;
 import org.soroth.procuctapi.dto.response.ProductResponse;
 import org.soroth.procuctapi.dto.request.UpdateProductRequest;
+import org.soroth.procuctapi.entity.Product;
+import org.soroth.procuctapi.entity.ProductFilter;
+import org.soroth.procuctapi.entity.ProductSpecification;
 import org.soroth.procuctapi.entity.Tag;
 import org.soroth.procuctapi.mapper.ProductMapper;
 import org.soroth.procuctapi.repository.CategoryRepository;
@@ -13,9 +16,11 @@ import org.soroth.procuctapi.repository.TagRepository;
 import org.soroth.procuctapi.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -60,16 +65,21 @@ public class ProductServiceImpl implements ProductService {
               ()-> new NoSuchElementException("Category with id = " + productRequest.categoryId() + "not found")
       );
       product.setCategory(category);
+
       //convert Set<Long> to Set<Tag>
+
       // getReferenceById vs findById
       if (productRequest.tagIds() != null && !productRequest.tagIds().isEmpty()){
           Set<Tag> tags = productRequest.tagIds().stream()
-                  .map(tagId -> tagRepository.getReferenceById(tagId))
+//                  .map(tagRepository::getReferenceById)
+                  .map(tagId -> tagRepository.findById(tagId).orElseThrow(
+                          ()-> new NoSuchElementException("Tag with id = "+tagId+ " not found! ")
+                  ))
                   .collect(Collectors.toSet());
           product.setTags(tags);
       }
 //        set ID using nextId
-        product.setUserId(1);
+//        product.setUserId(1);
 //        insert the data to the table only need to
 //        repository.save(entity) = insert
         return productMapper.mabToResponse(productRepository.save(product));
@@ -89,9 +99,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductResponse> findAllProducts(String keyword, Pageable pageable) {
-        return productRepository.findProductsByNameContainingIgnoreCase(keyword, keyword, pageable)
-                .map(productMapper::mabToResponse);
+    public Page<ProductResponse> findAllProducts(Pageable pageable, ProductFilter filter) {
+        Specification<Product> spec = ProductSpecification.filterProduct(filter);
+        return productRepository.findAll(spec, pageable).map(productMapper::mabToResponse);
+
+//    @Override
+//    public Page<ProductResponse> findAllProducts(String keyword, Pageable pageable) {
+//        return productRepository.findProductsByNameContainingIgnoreCase(keyword, keyword, pageable)
+//                .map(productMapper::mabToResponse);
     }
 
     @Override
